@@ -1,0 +1,33 @@
+﻿@model jcamacho_budgeter1.Models.BankAccount
+
+@{
+    ViewBag.Title = "Delete Bank Account";
+}
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="well well-lg well-topspace">
+            <h3 class="text-center">Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</h3>
+            <hr />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                if (Model.Balance <= 0)
+                {
+                    <p class="text-center text-danger">Balance: @Html.DisplayFor(modelItem => Model.Balance)</p>
+                }
+                else
+                {
+                    <p class="text-center text-success">Balance: @Html.DisplayFor(modelItem => Model.Balance)</p>
+                }
+                <div class="text-center">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-trash-o"></i> Delete
+                    </button>
+                    <span class="divider"> | </span>
+                    @Html.ActionLink("Cancel", "Details", "Households", new { id = Model.HouseholdId }, new { })
+                </div>
+            }
+        </div>
+    </div>
+</div>

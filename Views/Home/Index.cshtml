@@ -1,0 +1,40 @@
+﻿@model IEnumerable<jcamacho_budgeter1.Models.Household>
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "My Households";
+    string userId = User.Identity.GetUserId();
+    bool flag = false;
+}
+
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4 text-center">
+        <div class="well well-lg well-topspace">
+            <h2>My Households</h2>
+
+            <p>
+                <a href="@Url.Action("Create", "Households")" class="btn btn-default btn-block">Create New Household</a>
+            </p>
+            @foreach (var item in Model)
+         
+            {
+                if (item.IsDeleted != true)
+                {
+                    foreach (var user in item.Users)
+                    {
+                        if (user.Id == userId)
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (flag)
+                    {
+                        <hr />
+                        <a href="@Url.Action("Details", "Households", new { id = item.Id })" class="h4">@Html.DisplayFor(modelItem => item.Name)</a>
+                        flag = false;
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
